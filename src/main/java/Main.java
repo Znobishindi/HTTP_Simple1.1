@@ -1,8 +1,19 @@
 
 
 public class Main {
+    final static int PORT = 10000;
+
     public static void main(String[] args) {
-        Server server = new Server();
-        server.listen(10000);
+        final Server server = new Server();
+
+        for (String validPath : ClientHandler.validPaths) {
+            server.addHandler("GET", validPath, ClientHandler::goodResponse200
+            );
+        }
+
+        server.addHandler("POST", "/resources.html", ClientHandler::goodResponse200
+        );
+
+        server.listen(PORT);
     }
 }
