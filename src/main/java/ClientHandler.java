@@ -1,3 +1,5 @@
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 
@@ -39,9 +41,7 @@ public class ClientHandler implements Runnable {
             }
             handler.handle(request, out);
             goodResponse200(request, out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
     }
@@ -142,6 +142,9 @@ public class ClientHandler implements Runnable {
                     final String type = contentType.get();
                     if (type.equals("application/x-www-form-urlencoded")) {
                         postParams = URLEncodedUtils.parse(new URI("?" + body), StandardCharsets.UTF_8);
+                    }
+                    if (type.equals("multipart/form-data")) {
+                    //TODO
                     }
                 }
             }
